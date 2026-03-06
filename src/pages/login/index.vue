@@ -15,7 +15,6 @@ const lockLogin = lock(login)
 const onSubmit = lock(async () => {
     try {
     const res = await lockLogin(form.value)
-    console.log(res)
     if(res.code !== 10000){
         throw new Error(res.message || '登录失败')
     }
