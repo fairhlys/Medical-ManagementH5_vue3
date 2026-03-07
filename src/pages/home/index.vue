@@ -1,16 +1,19 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { getHomeData } from '@/api/home'
+import { useRouter } from 'vue-router'
 const value = ref('')
 const homeData = ref({})
 onMounted(async () => {
     const res = await getHomeData()
     homeData.value = res.data
-    console.log(homeData.value);
-    
 })
+const router = useRouter()
 const goOrderTwo = (index) => {
-    console.log('跳转订单二级页面', index)
+    router.push(`/createOrder?id=${homeData.value.hospitals[index].id}`)
+}
+const goOrder = (item) => {
+    router.push(`/createOrder?id=${item.id}`)
 }
 </script>
 <template>
@@ -23,8 +26,6 @@ const goOrderTwo = (index) => {
           v-model="value"
           shape="round"
           placeholder="请输入搜索关键词"
-          @search="onSearch"
-          @cancel="onCancel"
         />
     </div>
     <van-swipe class="my-swiper" height="170" :autoplay="3000" indicator-color="white">
@@ -37,7 +38,7 @@ const goOrderTwo = (index) => {
         <van-image radius="5" :src="item.pic_image_url" />
       </van-col>
     </van-row>
-    <van-row justify="space-around" v-for="item in homeData.hospitals" :key="item.id" class="yy-list">
+    <van-row justify="space-around" v-for="item in homeData.hospitals" :key="item.id" class="yy-list" @click="goOrder(item)">
         <van-col span="6">
             <van-image radius="5" :src="item.avatar_url" width="100" height="90" />
         </van-col>

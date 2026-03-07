@@ -1,13 +1,13 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router';
+import { ref, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router';
 const active = ref(0)
 const router = useRouter();
-onMounted(() => {
-    console.log(router);
-    const data = router.options.routes[0]
-    active.value = data.children.findIndex(item => item.path ===    router.currentRoute.value.path.split('/')[1])
-})
+const route = useRoute();
+const chose = () => {
+    active.value = router.options.routes[0].children.findIndex(item => item.path === router.currentRoute.value.path.split('/')[1])
+}
+watch(() => route.path, chose, { immediate: true })
 </script>
 <template>
     <RouterView></RouterView>
