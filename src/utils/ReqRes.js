@@ -1,7 +1,7 @@
 import axios from "axios";
 import router from "@/router";
 import { useUserStore } from "@/stores";
-const baseURL = 'https://v3pz.itndedu.com/v3pz';
+const baseURL = import.meta.env.VITE_API_BASE;
 const userStore = useUserStore()
 import { closeToast, showLoadingToast } from 'vant';
 
